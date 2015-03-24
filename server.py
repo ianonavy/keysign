@@ -80,7 +80,7 @@ def get_fingerprints():
     with Chdir(app.config['UPLOAD_FOLDER']):
         for file_name in os.listdir(UPLOAD_KEYS_FOLDER):
             full_path = os.path.join(UPLOAD_KEYS_FOLDER, file_name)
-            if full_path != ARCHIVE:
+            if '.gitignore' != file_name:
                 fingerprint = check_output(shlex.split('gpg --with-fingerprint ' + full_path)).decode('utf-8')
                 fingerprint = fingerprint.split('\n')[1].split(' = ')[1]
                 html += "<tr><td>{}</td><td>{}</td></tr>".format(file_name, fingerprint)
