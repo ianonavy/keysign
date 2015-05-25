@@ -71,7 +71,9 @@ def upload_file():
         fingerprints=get_fingerprints(),
         ids=get_ids(),
         archive_sum=archive_sum,
-        signed_archive_sum=signed_archive_sum)
+        signed_archive_sum=signed_archive_sum,
+        archive_exists=os.path.exists(ARCHIVE),
+        signed_archive_exists=os.path.exists(ARCHIVE_ALL))
 
 
 @app.route('/signed_keys', methods=['GET', 'POST'])

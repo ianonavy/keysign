@@ -44,6 +44,7 @@
 				</form>
 			</div>
 		</div>
+		{% if archive_exists %}
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Download Keys</h2>
@@ -52,6 +53,7 @@
 				sha1sum: {{ archive_sum }}
 			</div>
 		</div>
+		{% endif %}
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Sign Keys</h2>
@@ -77,6 +79,7 @@
 				</form>
 			</div>
 		</div>
+		{% if signed_archive_exists %}
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Download Everyone's Signed Keys</h2>
@@ -89,6 +92,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 
 </body>
