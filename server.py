@@ -80,18 +80,13 @@ def upload_file():
 def upload_signed_keys():
     if request.method == 'POST':
         file = request.files['file']
-        sig = request.files['signature']
-        if file and allowed_file(file.filename) and sig and allowed_file(sig.filename):
+        if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            sig_filename = secure_filename(sig.filename)
             full_path = os.path.join(app.config['UPLOAD_FOLDER'], UPLOAD_ARCHIVE_FOLDER, filename)
             file.save(full_path)
-            full_path = os.path.join(app.config['UPLOAD_FOLDER'], UPLOAD_ARCHIVE_FOLDER, sig_filename)
-            sig.save(full_path)
             with zipfile.ZipFile(ARCHIVE_ALL, 'a') as archive:
                 with Chdir(os.path.join(app.config['UPLOAD_FOLDER'])):
                     archive.write(os.path.join(UPLOAD_ARCHIVE_FOLDER, filename))
-                    archive.write(os.path.join(UPLOAD_ARCHIVE_FOLDER, sig_filename))
             return redirect(url_for('upload_file'))
     return redirect(url_for('upload_file'))
 
