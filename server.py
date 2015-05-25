@@ -101,7 +101,7 @@ def get_fingerprints():
         for file_name in os.listdir(UPLOAD_KEYS_FOLDER):
             full_path = os.path.join(UPLOAD_KEYS_FOLDER, file_name)
             if '.gitignore' != file_name:
-                fingerprint = check_output(shlex.split('gpg --with-fingerprint ' + full_path)).decode('utf-8')
+                fingerprint = check_output(shlex.split('/usr/bin/gpg --with-fingerprint ' + full_path)).decode('utf-8')
                 id_ = fingerprint.split('\n')[0].split('/')[1][:8]
                 fingerprint = fingerprint.split('\n')[1].split(' = ')[1]
                 url = url_for('download_key', filename=file_name)
@@ -117,7 +117,7 @@ def get_ids():
         for file_name in os.listdir(UPLOAD_KEYS_FOLDER):
             full_path = os.path.join(UPLOAD_KEYS_FOLDER, file_name)
             if '.gitignore' != file_name:
-                fingerprint = check_output(shlex.split('gpg --with-fingerprint ' + full_path)).decode('utf-8')
+                fingerprint = check_output(shlex.split('/usr/bin/gpg --with-fingerprint ' + full_path)).decode('utf-8')
                 id_ = fingerprint.split('\n')[0].split('/')[1][:8]
                 ids.append(id_)
     return ids
