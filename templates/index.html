@@ -19,6 +19,12 @@
 		.row {
 			margin-bottom: 32px;
 		}
+		.code {
+			font-family: monospace;
+			background-color: #ccc;
+			margin: 8px 0;
+			padding: 8px;
+		}
 	</style>
 </head>
 <body>
@@ -26,10 +32,13 @@
 		<h1>WPI CSC Key Signing Party</h1>
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Upload Your PGP Key</h2>
+				<h2>Upload Your PGP Public Key</h2>
+				<div class="code">
+					gpg --export --armor "&lt;your email address&gt;" &gt; your_name.asc
+				</div>
 				<form action="" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
-						your_name.gpg <input type="file" name="file">
+						your_name.asc <input type="file" name="file">
 					</div>
 					<input type="submit" value="Upload" class="btn btn-primary">
 				</form>
@@ -45,11 +54,24 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
+				<h2>Sign Keys</h2>
+				<div class="code">
+					KEYS=({{ ' '.join(ids) }});<br />
+					for key in $KEYS; do gpg --sign-key $key; done
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
 				<h2>Upload Your Signed Keys</h2>
+				<p>Export all your signed keys:</p>
+				<div class="code">
+					gpg --export --armor {{ ' '.join(ids) }} &gt; your_name.asc
+				</div>
+
 				<form action="/signed_keys" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
-						your_name.asc - signed keys<input type="file" name="file">
-						your_name.asc.gpg - signature<input type="file" name="signature">
+						your_name.asc<input type="file" name="file">
 					</div>
 					<input type="submit" value="Upload" class="btn btn-primary">
 				</form>
@@ -60,6 +82,11 @@
 				<h2>Download Everyone's Signed Keys</h2>
 				<a class="btn btn-success" href="{{ url_for('download_signed_keys') }}">Download as .zip</a>
 				sha1sum: {{ signed_archive_sum }}
+				<div class="code">
+					unzip csc_signed_keys.zip<br />
+					cd signed_keys<br />
+					gpg --import *.asc
+				</div>
 			</div>
 		</div>
 	</div>
