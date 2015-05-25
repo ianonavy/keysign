@@ -39,6 +39,14 @@ ARCHIVE = os.path.join(app.config['UPLOAD_FOLDER'], 'csc_keys.zip')
 ARCHIVE_ALL = os.path.join(app.config['UPLOAD_FOLDER'], 'csc_signed_keys.zip')
 
 
+# make directories if they don't exist
+for folder in (UPLOAD_KEYS_FOLDER, UPLOAD_ARCHIVE_FOLDER):
+    full_path = os.path.join(app.config['UPLOAD_FOLDER'], folder)
+    if not os.path.exists(full_path):
+        os.makedirs(full_path)
+
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
